@@ -10,5 +10,5 @@ type Sale struct {
 	beginDate     time.Time
 	endDate       time.Time
 	formOfPayment int64
-	productItems  []ProductItem
+	cart          Cart
 }

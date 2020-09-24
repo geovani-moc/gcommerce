@@ -10,4 +10,5 @@ type Report struct {
 	createDate time.Time
 	name       string
 	category   int64
+	sale       Sale
 }

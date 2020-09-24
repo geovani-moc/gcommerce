@@ -6,7 +6,7 @@ import (
 
 //Cart defines
 type Cart struct {
-	code      int64
-	beginDate time.Time
-	endDate   time.Time
+	Code      int64
+	BeginDate time.Time
+	EndDate   time.Time
 }

@@ -8,4 +8,5 @@ type Product struct {
 	price         float64
 	quantityStock float64
 	status        int64
+	brand         Brand
 }

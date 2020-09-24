@@ -2,8 +2,8 @@ package entity
 
 // Brand defines
 type Brand struct {
-	code        int64
-	name        string
-	description string
-	status      int64
+	Code        int64
+	Name        string
+	Description string
+	Status      int64
 }

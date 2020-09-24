@@ -5,7 +5,7 @@ type User struct {
 	Code   int64
 	Login  string
 	Senha  string
-	Status int
-	Type   string //int
-	Email  string
+	Status int64
+	Type   int64
+	person Person
 }
