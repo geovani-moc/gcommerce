@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/geovani-moc/gcommerce/controller"
 	"github.com/gorilla/mux"
 )
 
@@ -26,8 +27,10 @@ func BuildApp() *App {
 
 		flag.StringVar(&dir, "dir", ".", "http://localhost"+_app.port)
 
-		_app.router.PathPrefix(staticDir).Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir(dir))))
+		_app.router.PathPrefix(staticDir).Handler(
+			http.StripPrefix(staticDir, http.FileServer(http.Dir(dir))))
 
+		_app.router.HandleFunc("/product", controller.Product)
 	}
 	return _app
 }

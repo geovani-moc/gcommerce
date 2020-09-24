@@ -8,7 +8,7 @@ type Person struct {
 	CPF       string
 	Came      string
 	BirthDate time.Time
-	Type      int64
+	Type      int64 // admin, client or official
 	Sexo      int64 //int
 	product   Product
 	cart      Cart
