@@ -16,8 +16,8 @@ type App struct {
 
 var _app *App
 
-//StartApp instantiate the _app case not instantiate
-func StartApp() *App {
+//BuildApp instantiate the _app case not instantiate
+func BuildApp() *App {
 	if _app == nil {
 		_app = NewApp()
 
