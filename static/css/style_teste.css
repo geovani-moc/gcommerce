@@ -1,7 +1,14 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: auto;
+    margin: 10px;
     text-align: center;
     font-family: arial;
   }
@@ -25,9 +32,4 @@
   
   .card button:hover {
     opacity: 0.7;
-  }
-
-  .containerProducts{
-    display: flex;
-    flex-direction: column;
   }
