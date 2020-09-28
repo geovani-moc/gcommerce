@@ -2,11 +2,11 @@ package entity
 
 // Product define
 type Product struct {
-	code          int64
-	name          string
-	description   string
-	price         float64
-	quantityStock float64
-	status        int64
-	brand         Brand
+	Code          int64
+	Name          string
+	Description   string
+	Price         float64
+	QuantityStock float64
+	Status        int64
+	BrandProduct  Brand
 }

@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 
 <body>
 
     <div>
+        {{range .Products}}
         <div class="card">
-            <!-- <img src="jeans3.jpg" alt="Denim Jeans" style="width:100%"> -->
-            <h1>Tailored Jeans</h1>
-            <p class="price">$19.99</p>
-            <p>Some text about the jeans..</p>
+            <img src="../static/image/no_image.png" alt="Denim Jeans" style="width:100%"> 
+            <h1>{{.Name}}</h1>
+            <p class="price">${{.Price}}</p>
+            <p>{{.Description}}</p>
             <p><button>Add to Cart</button></p>
         </div>
+        {{end}}
     </div>
 
 </body>

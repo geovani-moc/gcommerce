@@ -1,7 +1,6 @@
 package actions
 
 import (
-	"flag"
 	"fmt"
 	"net/http"
 
@@ -22,15 +21,10 @@ func BuildApp() *App {
 	if _app == nil {
 		_app = NewApp()
 
-		staticDir := "/static/"
-		var dir string
-
-		flag.StringVar(&dir, "dir", ".", "http://localhost"+_app.port)
-
-		_app.router.PathPrefix(staticDir).Handler(
-			http.StripPrefix(staticDir, http.FileServer(http.Dir(dir))))
-
 		_app.router.HandleFunc("/product", controller.Product)
+
+		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+		// _app.router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	}
 	return _app
 }
