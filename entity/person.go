@@ -9,8 +9,9 @@ type Person struct {
 	Came      string
 	BirthDate time.Time
 	Type      int64 // admin, client or official
-	Sexo      int64 //int
-	product   Product
+	Sexo      int64
+	logged    bool
+	product   Product //olhar se faz sentido remover
 	cart      Cart
 	report    Report
 	contact   Contact
