@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/geovani-moc/gcommerce/controller"
@@ -10,8 +11,9 @@ import (
 
 //App struct define
 type App struct {
-	router *mux.Router
-	port   string
+	router      *mux.Router
+	port        string
+	TemplateApp *template.Template
 }
 
 var _app *App

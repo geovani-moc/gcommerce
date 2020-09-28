@@ -1,49 +1,19 @@
 package controller
 
 import (
-	"html/template"
-	"log"
 	"net/http"
 
-	"github.com/geovani-moc/gcommerce/entity"
+	"github.com/geovani-moc/gcommerce/model"
 )
 
-// ProductTemplateVariables variables for template parser
-type ProductTemplateVariables struct {
-	Title    string
-	Products []entity.Product
-}
-
-// Product controller
+//Product redirect
 func Product(w http.ResponseWriter, r *http.Request) {
+	// var err error
+	// app.TemplateApp, err = template.ParseGlob("/view/*.html")
 
-	variables := ProductTemplateVariables{
-		Title:    "Todos produtos",
-		Products: fakeProducts(),
-	}
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	pageTemplate, err := template.ParseFiles("view/product.html")
-	if err != nil {
-		log.Print("Template parsing error: ", err)
-	}
-
-	err = pageTemplate.Execute(w, variables)
-	if err != nil {
-		log.Print("Template executing error: ", err)
-	}
-}
-
-func fakeProducts() []entity.Product {
-	products := make([]entity.Product, 0)
-
-	products = append(products, entity.Product{
-		Code:          1,
-		Name:          "Notebook lenovo",
-		Description:   "Notebook super rapido com i5 e placa de video dedicada!!!",
-		Price:         10.2,
-		QuantityStock: 2,
-		Status:        1,
-	})
-
-	return products
+	model.Product(w, r)
 }

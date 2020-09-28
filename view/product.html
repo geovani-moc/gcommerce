@@ -10,12 +10,12 @@
 
 <body>
 
-    <div>
+    <div class="containerProducts">
         {{range .Products}}
         <div class="card">
             <img src="../static/image/no_image.png" alt="Denim Jeans" style="width:100%"> 
             <h1>{{.Name}}</h1>
-            <p class="price">${{.Price}}</p>
+            <p class="price">${{printf "%.2f" .Price}}</p>
             <p>{{.Description}}</p>
             <p><button>Add to Cart</button></p>
         </div>
