@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>{{.Title}}</title>
 </head>
 <body>
-    
+    <div>
+        <ul>
+            {{range $page := .Pages}}
+                <li>link: <a href=/{{$page}}>{{$page}}</a></li>
+            {{end}}
+        </ul>
+    </div>
 </body>
+
 </html>

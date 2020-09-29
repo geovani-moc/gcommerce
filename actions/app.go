@@ -21,10 +21,10 @@ func BuildApp() *App {
 	if _app == nil {
 		_app = NewApp()
 
+		_app.router.HandleFunc("/", controller.Home)
 		_app.router.HandleFunc("/product", controller.Product)
 
 		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-		// _app.router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	}
 	return _app
 }

@@ -1,14 +1,13 @@
 package main
 
 import (
-	"html/template"
 	"log"
 
 	"github.com/geovani-moc/gcommerce/actions"
 )
 
-//TemplateApp temporary local
-var TemplateApp *template.Template
+//TEMPLATE temporary local
+//var TEMPLATE *template.Template
 
 func main() {
 	app := actions.BuildApp()
