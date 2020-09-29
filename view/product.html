@@ -1,3 +1,4 @@
+{{define "product"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,9 @@
 </head>
 
 <body>
-
+    {{template "header" .}}
+    {{template "side-bar" .}}
+    <main>
     <div class="grid-container">
         {{range .Products}}
         <div class="card">
@@ -21,7 +24,9 @@
         </div>
         {{end}}
     </div>
-
+    </main>
+    {{template "footer" .}}
 </body>
 
 </html>
+{{end}}

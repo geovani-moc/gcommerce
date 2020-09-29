@@ -22,12 +22,14 @@ func Product(w http.ResponseWriter, r *http.Request) {
 		Products: fakeProducts(),
 	}
 
-	pageTemplate, err := template.ParseFiles("view/product.html")
+	pageTemplate, err := template.ParseFiles("view/product.html", "view/base/footer.html",
+		"view/base/header.html", "view/base/side-bar.html")
+
 	if err != nil {
 		log.Print("Template parsing error: ", err)
 	}
 
-	err = pageTemplate.Execute(w, variables)
+	err = pageTemplate.ExecuteTemplate(w, "product", variables)
 
 	if err != nil {
 		log.Print("Template executing error: ", err)

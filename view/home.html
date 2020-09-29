@@ -6,13 +6,19 @@
     <title>{{.Title}}</title>
 </head>
 <body>
+    {{template "header" .}}
+    {{template "side-bar" .}}
+    <main>
     <div>
         <ul>
             {{range $page := .Pages}}
                 <li>link: <a href=/{{$page}}>{{$page}}</a></li>
             {{end}}
         </ul>
-    </div>
+    </div>        
+    </main>
+    {{template "footer" .}}
+
 </body>
 
 </html>
