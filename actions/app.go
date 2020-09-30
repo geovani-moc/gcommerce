@@ -25,6 +25,9 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/product", controller.Product)
 		_app.router.HandleFunc("/stock", controller.Stock)
 
+		//API restfull
+		_app.router.HandleFunc("/api/product/", middleware.GetAllProducts).Methods("GET", "OPTIONS")
+
 		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	}
 	return _app
