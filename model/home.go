@@ -19,10 +19,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		Title: "Lista de páginas",
 		Pages: []string{
 			"product",
+			"stock",
 		},
 	}
 
-	pageTemplate, err := template.ParseFiles("view/home.html")
+	pageTemplate, err := template.ParseFiles("view/home.html", "view/base/footer.html",
+		"view/base/header.html", "view/base/side-bar.html")
+
 	if err != nil {
 		log.Print("Template parsing error: ", err)
 	}

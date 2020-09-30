@@ -1,0 +1,34 @@
+{{define "stock"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+</head>
+<body>
+    {{template "header" .}}
+    {{template "side-bar" .}}
+    <main>
+        <div>
+            <form action="#" method="POST">
+                <label for="id_code">código:</label>  
+                <input type="text" name="code" id="id_code"><br>
+
+                <label for="id_name">nome:</label> 
+                <input type="text" name="name" id="id_name"><br>
+
+                <label for="description">descrição:</label>
+                <input type="text" name="description" id="description"><br>
+
+                <label for="price">preço: </label>
+                <input type="number" step="0.01" name="price" id="price"><br><br>
+
+                <input type="submit" value="Inserir">
+            </form>
+        </div>
+    </main>
+    {{template "footer" .}}
+</body>
+</html>
+{{end}}

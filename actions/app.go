@@ -23,6 +23,7 @@ func BuildApp() *App {
 
 		_app.router.HandleFunc("/", controller.Home)
 		_app.router.HandleFunc("/product", controller.Product)
+		_app.router.HandleFunc("/stock", controller.Stock)
 
 		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	}
