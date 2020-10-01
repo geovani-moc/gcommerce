@@ -2,7 +2,7 @@
 
 <h2> Estudo da linguagem GO(desenvolvendo um e-commerce básico) </h2>
 
-<h3> recursos:<h3> <br>
+<h3> recursos:<h3> 
         <ul>
             <li>rest</li> 
             <li> postgres</li>
