@@ -1,6 +1,7 @@
 package database
 
 import (
+	"database/sql"
 	"errors"
 	"log"
 
@@ -8,8 +9,21 @@ import (
 )
 
 //InsertProduct in database
-func InsertProduct(entity.Product) {
+func InsertProduct(product entity.Product) int64 {
+	db := createConnection()
+	defer db.Close()
 
+	sqlStatement := `insert into products (code, name, description, price) VALUES ($1, $2, $3, $4) returning id`
+
+	var id int64
+
+	err := db.QueryRow(sqlStatement, product.Code, product.Name, product.Description, product.Price)
+	if err != nil {
+		log.Print("Unable to execute the query ", err)
+	}
+	log.Print("Inserted a single record ", id)
+
+	return id
 }
 
 //GetAllProducts return prodducts in database
@@ -23,7 +37,7 @@ func GetAllProducts() ([]entity.Product, error) {
 	var products []entity.Product
 
 	//create the select sql query
-	sqlStatement := `SELECT * FROM users`
+	sqlStatement := `SELECT * FROM  product`
 
 	//execute the sql statement
 	rows, err := db.Query(sqlStatement)
@@ -92,4 +106,72 @@ func GetFakeProducts() ([]entity.Product, error) {
 	}
 
 	return products, nil
+}
+
+//GetProduct return product by id
+func GetProduct(id int64) (entity.Product, error) {
+	db := createConnection()
+	defer db.Close()
+
+	var product entity.Product
+
+	sqlStatement := `select * FROM products where id=$1`
+	row := db.QueryRow(sqlStatement, id)
+
+	err := row.Scan(&product.Code, &product.Name, &product.Description, &product.Price)
+
+	switch err {
+	case sql.ErrNoRows:
+		log.Print("No rows were retourned")
+		return product, nil
+	case nil:
+		return product, nil
+	default:
+		log.Print("Unable to scan the row ", err)
+	}
+
+	return product, err
+}
+
+//UpdateProduct refresh the product values by id
+func UpdateProduct(id int64, product entity.Product) int64 {
+	db := createConnection()
+	defer db.Close()
+
+	sqlStatement := `update product set code=$2, name=$3, description=$4, price=$5 where id=$1`
+	response, err := db.Exec(sqlStatement, id, product.Code, product.Name, product.Description, product.Price)
+
+	if err != nil {
+		log.Print("Unable to execute the query ", err)
+	}
+
+	rowsAffected, err := response.RowsAffected()
+	if err != nil {
+		log.Print("Error while checking the affected rows. ", err)
+	}
+	log.Print("Total rows/record affected ", rowsAffected)
+
+	return rowsAffected
+}
+
+//DeleteProduct remove product by id
+func DeleteProduct(id int64) int64 {
+	db := createConnection()
+	defer db.Close()
+
+	sqlStatement := `delete from products where id=$1`
+	response, err := db.Exec(sqlStatement, id)
+
+	if err != nil {
+		log.Print("Unable to execute the query. ", err)
+	}
+
+	rowsAffected, err := response.RowsAffected()
+	if err != nil {
+		log.Print("Error while checking the affected rows. ", err)
+	}
+
+	log.Print("Total rows/record affected ", err)
+
+	return rowsAffected
 }

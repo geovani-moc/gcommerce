@@ -4,5 +4,5 @@
 
 <p> Requisitos</p>
 
--Go 1.15.2
+-Go 1.15.2<br>
 -Postgres

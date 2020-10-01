@@ -2,6 +2,7 @@ package entity
 
 // Product define
 type Product struct {
+	id            int64
 	Code          int64
 	Name          string
 	Description   string
