@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/geovani-moc/gcommerce/controller"
+	"github.com/geovani-moc/gcommerce/middleware"
+
 	"github.com/gorilla/mux"
 )
 
