@@ -53,13 +53,36 @@ func GetAllProducts() ([]entity.Product, error) {
 func GetFakeProducts() ([]entity.Product, error) {
 	products := []entity.Product{
 		{
-			Code: 1,
+			Code:          1,
+			Name:          "Notebook lenovo",
+			Description:   "Notebook super rapido com i5 e placa de video dedicada!!!",
+			Price:         5000.00,
+			QuantityStock: 2,
+			Status:        1,
 		},
 		{
-			Code: 2,
+			Code:          2,
+			Name:          "Notebook lenovo",
+			Description:   "Notebook super rapido com i9 e placa de video dedicada!!!",
+			Price:         3010.20,
+			QuantityStock: 2,
+			Status:        1,
 		},
 		{
-			Code: 3,
+			Code:          3,
+			Name:          "Notebook Asus",
+			Description:   "Notebook  com i3",
+			Price:         2010.20,
+			QuantityStock: 223,
+			Status:        2,
+		},
+		{
+			Code:          4,
+			Name:          "Notebook tectois",
+			Description:   "Notebook amd e placa de video dedicada.",
+			Price:         3100.00,
+			QuantityStock: 434,
+			Status:        1,
 		},
 	}
 
