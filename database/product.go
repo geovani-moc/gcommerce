@@ -7,6 +7,11 @@ import (
 	"github.com/geovani-moc/gcommerce/entity"
 )
 
+//InsertProduct in database
+func InsertProduct(entity.Product) {
+
+}
+
 //GetAllProducts return prodducts in database
 func GetAllProducts() ([]entity.Product, error) {
 	//create the postgres db connection

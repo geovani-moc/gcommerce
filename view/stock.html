@@ -11,7 +11,9 @@
     {{template "side-bar" .}}
     <main>
         <div>
-            <form action="#" method="POST">
+            <form action="/stock" method="POST">
+                <input type="hidden" name="cust_id" id="cust_id" value="insert-product">
+
                 <label for="id_code">código:</label>  
                 <input type="text" name="code" id="id_code"><br>
 
