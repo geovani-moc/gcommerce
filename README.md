@@ -2,9 +2,7 @@
 
 <h2> Estudo da linguagem GO(desenvolvendo um e-commerce básico) </h2>
 
-<h3> Requisitos<h3>
+<p> Requisitos</p>
 
-        <ul>
-            <li>Go 1.15.2</li>
-            <li>Postgres</li>
-        </ul>
+-Go 1.15.2
+-Postgres
