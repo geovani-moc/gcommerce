@@ -10,6 +10,6 @@ type Product struct {
 	QuantityStock float64 `json:"quantity_stock"`
 	Status        int64   `json:"status"`
 	//Cold          float64 `json:"cold"`
-	Category     int64 `json:"category"`
-	BrandProduct Brand `json:"id_brand_product"`
+	Category int64 `json:"category"`
+	IDbrand  Brand `json:"id_brand_product"`
 }

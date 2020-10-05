@@ -2,7 +2,8 @@ package entity
 
 //Contact define
 type Contact struct {
-	Code  int64
-	phone string
-	email string
+	ID    int64  `json:"id"`
+	Code  int64  `json:"code"`
+	Phone string `json:"phone"`
+	Email string `json:"email"`
 }
