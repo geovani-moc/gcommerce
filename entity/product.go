@@ -2,14 +2,14 @@ package entity
 
 // Product define
 type Product struct {
-	id            int64
-	Code          int64
-	Name          string
-	Description   string
-	Price         float64
-	QuantityStock float64
-	Status        int64
-	Cold          float64
-	Category      int64
-	BrandProduct  Brand
+	ID            int64   `json:"id"`
+	Code          int64   `json:"code"`
+	Name          string  `json:"name"`
+	Description   string  `json:"description"`
+	Price         float64 `json:"price"`
+	QuantityStock float64 `json:"quantity_stock"`
+	Status        int64   `json:"status"`
+	//Cold          float64 `json:"cold"`
+	Category     int64 `json:"category"`
+	BrandProduct Brand `json:"id_brand_product"`
 }

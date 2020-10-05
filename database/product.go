@@ -13,11 +13,19 @@ func InsertProduct(product entity.Product) int64 {
 	db := createConnection()
 	defer db.Close()
 
-	sqlStatement := `insert into products (code, name, description, price) VALUES ($1, $2, $3, $4) returning id`
+	sqlStatement := `
+	insert into products (id, code, name, description, 
+		price, quantity_stock, status, category) 
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+	returning id`
 
 	var id int64
 
-	err := db.QueryRow(sqlStatement, product.Code, product.Name, product.Description, product.Price)
+	err := db.QueryRow(sqlStatement,
+		product.ID, product.Code, product.Name,
+		product.Description, product.Price,
+		product.QuantityStock, product.Status, product.Category)
+
 	if err != nil {
 		log.Print("Unable to execute the query ", err)
 	}
@@ -53,14 +61,17 @@ func GetAllProducts() ([]entity.Product, error) {
 	for rows.Next() {
 		var product entity.Product
 
-		//unmarshal the row object to user
-		err = rows.Scan(&product.Code, &product.Name, &product.Description, &product.Price)
+		//unmarshal the row object to product
+		err = rows.Scan(
+			&product.ID, &product.Code, &product.Name,
+			&product.Description, &product.Price, &product.QuantityStock,
+			&product.Status, &product.Category)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)
 		}
 
-		// append the user in the user slice
+		// append the product in the product slice
 		products = append(products, product)
 	}
 
@@ -118,7 +129,10 @@ func GetProduct(id int64) (entity.Product, error) {
 	sqlStatement := `select * FROM products where id=$1`
 	row := db.QueryRow(sqlStatement, id)
 
-	err := row.Scan(&product.Code, &product.Name, &product.Description, &product.Price)
+	err := row.Scan(
+		&product.ID, &product.Code, &product.Name,
+		&product.Description, &product.Price, &product.QuantityStock,
+		&product.Status, &product.Category)
 
 	switch err {
 	case sql.ErrNoRows:
@@ -138,8 +152,15 @@ func UpdateProduct(id int64, product entity.Product) int64 {
 	db := createConnection()
 	defer db.Close()
 
-	sqlStatement := `update product set code=$2, name=$3, description=$4, price=$5 where id=$1`
-	response, err := db.Exec(sqlStatement, id, product.Code, product.Name, product.Description, product.Price)
+	sqlStatement := `update product set 
+	code=$2, name=$3, description=$4, price=$5, quantity_stock=$6,
+	status=$7, category=$8 
+	where id=$1`
+
+	response, err := db.Exec(sqlStatement,
+		id, product.Code, product.Name, product.Description,
+		product.Price, product.QuantityStock, product.Status,
+		product.Category)
 
 	if err != nil {
 		log.Print("Unable to execute the query ", err)
