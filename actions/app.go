@@ -29,6 +29,7 @@ func BuildApp() *App {
 	if _app == nil {
 		_app = NewApp()
 
+		//pages
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, _app.globalTemplate)
 		})
@@ -45,6 +46,7 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/api/product/{id}", middleware.UpdateProduct).Methods("PUT", "OPTIONS")
 		_app.router.HandleFunc("/api/delete-product/{id}", middleware.UpdateProduct).Methods("DELETE", "OPTIONS")
 
+		//static files
 		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	}
 	return _app
@@ -68,36 +70,20 @@ func (app *App) Run() error {
 	return http.ListenAndServe(app.port, nil)
 }
 
-// func parseTemplates(directory string) *template.Template {
-// 	globalTemplate := template.Must(template.ParseGlob(directory + "/*.html"))
-// 	template.Must(globalTemplate.ParseGlob(directory + "/base/*.html"))
-
-// 	return globalTemplate
-// }
-
-func getTemplate() *template.Template {
-	if nil == _app.globalTemplate {
-		_app.globalTemplate = parseTemplates()
-	}
-
-	return _app.globalTemplate
-}
-
 func parseTemplates() *template.Template {
 	templ := template.New("")
 	err := filepath.Walk("./view", func(path string, info os.FileInfo, err error) error {
 		if strings.Contains(path, ".html") {
 			_, err = templ.ParseFiles(path)
 			if err != nil {
-				log.Println(err)
+				log.Print("erro ao realizar o parser do template, ", err)
 			}
 		}
-
 		return err
 	})
 
 	if err != nil {
-		panic(err)
+		log.Print("erro na verificação de diretorios do template, ", err)
 	}
 
 	return templ
