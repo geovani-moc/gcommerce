@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 )
 
 //Stock redirect to page stock
-func Stock(w http.ResponseWriter, r *http.Request) {
+func Stock(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
 
 	if r.Method == http.MethodPost {
 		if r.FormValue("cust_id") == "insert-product" {
@@ -34,5 +35,5 @@ func Stock(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	model.Stock(w, r)
+	model.Stock(w, r, globalTemplate)
 }

@@ -15,21 +15,14 @@ type ProductTemplateVariables struct {
 }
 
 // Product controller
-func Product(w http.ResponseWriter, r *http.Request) {
+func Product(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
 
 	variables := ProductTemplateVariables{
 		Title:    "Todos produtos",
 		Products: fakeProducts(),
 	}
 
-	pageTemplate, err := template.ParseFiles("view/product.html", "view/base/footer.html",
-		"view/base/header.html", "view/base/side-bar.html")
-
-	if err != nil {
-		log.Print("Template parsing error: ", err)
-	}
-
-	err = pageTemplate.ExecuteTemplate(w, "product", variables)
+	err := globalTemplate.ExecuteTemplate(w, "product", variables)
 
 	if err != nil {
 		log.Print("Template executing error: ", err)

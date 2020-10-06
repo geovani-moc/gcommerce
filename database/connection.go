@@ -3,8 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
-
-	_ "github.com/lib/pq"
+	//_ "github.com/lib/pq"
 )
 
 //Quando for colocado em produção mudar
