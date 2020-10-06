@@ -67,7 +67,7 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	params := mux.Vars(r) //mudar para _app
-	id, err := strconv.Atoi(params["id"])
+	id, err := strconv.ParseInt(params["id"], 10, 64)
 	if err != nil {
 		log.Print("Unable to convert the string into int ", err)
 	}
@@ -88,7 +88,7 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	params := mux.Vars(r)
-	id, err := strconv.Atoi(params["id"])
+	id, err := strconv.ParseInt(params["id"], 10, 64)
 	if err != nil {
 		log.Print("Unable to convert the string into int. ", err)
 	}
@@ -118,9 +118,8 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	params := mux.Vars(r)
-	id, err := strconv.Atoi(params["id"])
-	// corrigir com(convercao para int e depois int 64):
-	// id, err := strconv.ParseInt(params["id"], 10, 64)
+	id, err := strconv.ParseInt(params["id"], 10, 64)
+
 	if err != nil {
 		log.Print("Unable to convert the string into int. ", err)
 	}
