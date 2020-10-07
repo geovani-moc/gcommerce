@@ -45,11 +45,28 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/api/product{id}", middleware.GetProduct).Methods("GET", "OPTIONS")
 		_app.router.HandleFunc("/api/product/{id}", middleware.UpdateProduct).Methods("PUT", "OPTIONS")
 		_app.router.HandleFunc("/api/delete-product/{id}", middleware.UpdateProduct).Methods("DELETE", "OPTIONS")
+		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 		//static files
-		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+		// _app.router.PathPrefix("/static/").Handler(
+		// 	http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))//static files without cache control
+		_app.router.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
+			cacheControlWrapper(http.FileServer(http.Dir("static"))))) //static files with cache control
+
+		//not foun page
+		_app.router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			controller.Product(w, r, _app.globalTemplate)
+		})
 	}
 	return _app
+}
+
+// controle do tempo do cache
+func cacheControlWrapper(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "max-age=60") // em segundos
+		h.ServeHTTP(w, r)
+	})
 }
 
 // NewApp create the app
