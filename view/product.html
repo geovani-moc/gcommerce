@@ -2,21 +2,22 @@
 <!DOCTYPE html>
 <html lang="en">
 {{template "head" .}}
+
 <body>
     {{template "header" .}}
     {{template "side-bar" .}}
-    <main>
-    <div class="grid-container">
-        {{range .Products}}
-        <div class="card">
-            <img src="../static/image/no_image.png" alt="Denim Jeans" style="width:100%"> 
-            <h1>{{.Name}}</h1>
-            <p class="price">${{printf "%.2f" .Price}}</p>
-            <p>{{.Description}}</p>
-            <p><button>Add to Cart</button></p>
+    <main class="main">
+        <div class="grid-container">
+            {{range .Products}}
+            <div class="card">
+                <img src="../static/image/no_image.png" alt="Denim Jeans" style="width:100%">
+                <h1>{{.Name}}</h1>
+                <p class="price">${{printf "%.2f" .Price}}</p>
+                <p>{{.Description}}</p>
+                <p><button>Add to Cart</button></p>
+            </div>
+            {{end}}
         </div>
-        {{end}}
-    </div>
     </main>
     {{template "footer" .}}
 </body>
