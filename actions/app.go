@@ -53,9 +53,9 @@ func BuildApp() *App {
 		_app.router.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
 			cacheControlWrapper(http.FileServer(http.Dir("static"))))) //static files with cache control
 
-		//not foun page
+		//not found page
 		_app.router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			controller.Product(w, r, _app.globalTemplate)
+			controller.Code404(w, r, _app.globalTemplate) //nao funcionando
 		})
 	}
 	return _app
