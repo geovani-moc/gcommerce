@@ -3,7 +3,9 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	//_ "github.com/lib/pq"
+
+	//driver postgresql
+	_ "github.com/lib/pq"
 )
 
 //Quando for colocado em produção mudar

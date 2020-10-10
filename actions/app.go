@@ -26,7 +26,7 @@ var _app *App
 
 //BuildApp instantiate the _app case not instantiate
 func BuildApp() *App {
-	if _app == nil {
+	if nil == _app {
 		_app = NewApp()
 
 		//pages

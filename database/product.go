@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"log"
@@ -21,16 +22,34 @@ func InsertProduct(product entity.Product) int64 {
 
 	var id int64
 
-	err := db.QueryRow(sqlStatement,
-		product.ID, product.Code, product.Name,
-		product.Description, product.Price,
+	ctx := context.Background()
+	tx, err := db.BeginTx(ctx, nil)
+	if nil != err {
+		log.Fatal("erro ao iniciar a transação, ", err)
+	}
+
+	// _, err = tx.ExecContext(ctx, sqlStatement, product.ID, product.Code,
+	// 	product.Name, product.Description, product.Price,
+	// 	product.QuantityStock, product.Status, product.Category)
+	// if nil != err {
+	// 	tx.Rollback()
+	// 	log.Fatal(err)
+	// }
+
+	row := tx.QueryRowContext(ctx, sqlStatement, product.ID, product.Code,
+		product.Name, product.Description, product.Price,
 		product.QuantityStock, product.Status, product.Category)
 
-	if err != nil {
-		log.Print("Unable to execute the query ", err)
+	if nil != row {
+		tx.Rollback()
+		log.Fatal("Erro ao realizar a transação, ")
 	}
-	log.Print("Inserted a single record ", id)
+	err = tx.Commit()
+	if nil != err {
+		log.Fatal("erro ao realizar o commit, ", err)
+	}
 
+	//retornando id invalido
 	return id
 }
 
