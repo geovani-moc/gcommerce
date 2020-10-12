@@ -17,9 +17,11 @@ import (
 
 //App struct define
 type App struct {
-	router         *mux.Router
-	port           string
-	globalTemplate *template.Template
+	router          *mux.Router
+	port            string
+	globalTemplate  *template.Template
+	version         string
+	databaseVersion float64
 }
 
 var _app *App
@@ -72,17 +74,20 @@ func cacheControlWrapper(h http.Handler) http.Handler {
 // NewApp create the app
 func NewApp() *App {
 	app := &App{
-		router:         mux.NewRouter(),
-		port:           ":8080",
-		globalTemplate: parseTemplates(),
+		router:          mux.NewRouter(),
+		port:            ":8080",
+		globalTemplate:  parseTemplates(),
+		version:         "0.1 alpha",
+		databaseVersion: 0.1, //ler e gravar no arquivo env, e comparar com o banco de dados
 	}
 	return app
 }
 
 //Run starts the server
 func (app *App) Run() error {
+	fmt.Println("Version: ", app.version)
 	fmt.Println("http://localhost" + app.port)
-	http.Handle("/", _app.router)
+	http.Handle("/", app.router)
 
 	return http.ListenAndServe(app.port, nil)
 }
