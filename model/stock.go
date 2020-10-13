@@ -1,9 +1,10 @@
 package model
 
 import (
-	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/geovani-moc/gcommerce/util"
 )
 
 //StockTemplateVariables variables in the page
@@ -12,13 +13,13 @@ type StockTemplateVariables struct {
 }
 
 //Stock generate page
-func Stock(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
+func Stock(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variables := StockTemplateVariables{
 		Title: "Gerenciar estoque",
 	}
 
-	err := globalTemplate.ExecuteTemplate(w, "stock", variables)
+	err := root.Templates.ExecuteTemplate(w, "stock", variables)
 	if err != nil {
 		log.Print("Template executing error: ", err)
 	}

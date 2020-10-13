@@ -11,6 +11,7 @@ import (
 
 	"github.com/geovani-moc/gcommerce/controller"
 	"github.com/geovani-moc/gcommerce/middleware"
+	"github.com/geovani-moc/gcommerce/util"
 
 	"github.com/gorilla/mux"
 )
@@ -18,10 +19,9 @@ import (
 //App struct define
 type App struct {
 	router          *mux.Router
-	port            string
-	globalTemplate  *template.Template
 	version         string
 	databaseVersion float64
+	root            util.Root
 }
 
 var _app *App
@@ -33,13 +33,16 @@ func BuildApp() *App {
 
 		//pages
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			controller.Home(w, r, _app.globalTemplate)
+			controller.Home(w, r, &_app.root)
 		})
 		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
-			controller.Product(w, r, _app.globalTemplate)
+			controller.Product(w, r, &_app.root)
 		})
 		_app.router.HandleFunc("/stock", func(w http.ResponseWriter, r *http.Request) {
-			controller.Stock(w, r, _app.globalTemplate)
+			controller.Stock(w, r, &_app.root)
+		})
+		_app.router.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
+			controller.Profile(w, r, &_app.root)
 		})
 
 		//API restfull PRODUCT
@@ -57,7 +60,7 @@ func BuildApp() *App {
 
 		//not found page
 		_app.router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			controller.Code404(w, r, _app.globalTemplate) //nao funcionando
+			controller.Code404(w, r, &_app.root)
 		})
 	}
 	return _app
@@ -75,21 +78,30 @@ func cacheControlWrapper(h http.Handler) http.Handler {
 func NewApp() *App {
 	app := &App{
 		router:          mux.NewRouter(),
-		port:            ":8080",
-		globalTemplate:  parseTemplates(),
 		version:         "0.1 alpha",
 		databaseVersion: 0.1, //ler e gravar no arquivo env, e comparar com o banco de dados
+		root: util.Root{
+			Port:      ":8080",
+			Templates: parseTemplates(),
+			Pages: []string{
+				"product",
+				"stock",
+				"profile",
+			},
+		},
 	}
+	log.Print("App criado ...")
 	return app
 }
 
 //Run starts the server
 func (app *App) Run() error {
-	fmt.Println("Version: ", app.version)
-	fmt.Println("http://localhost" + app.port)
+	log.Print("App iniciado ...")
+	fmt.Println("Version: Gcommerce ", app.version)
+	fmt.Println("Aplicação disponivel em: http://localhost" + app.root.Port)
 	http.Handle("/", app.router)
 
-	return http.ListenAndServe(app.port, nil)
+	return http.ListenAndServe(app.root.Port, nil)
 }
 
 func parseTemplates() *template.Template {

@@ -1,11 +1,11 @@
 package model
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 
 	"github.com/geovani-moc/gcommerce/database"
+	"github.com/geovani-moc/gcommerce/util"
 
 	"github.com/geovani-moc/gcommerce/entity"
 )
@@ -17,7 +17,7 @@ type ProductTemplateVariables struct {
 }
 
 // Product controller
-func Product(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
+func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 	var err error
 	variables := ProductTemplateVariables{
 		Title: "Todos produtos",
@@ -28,7 +28,7 @@ func Product(w http.ResponseWriter, r *http.Request, globalTemplate *template.Te
 		log.Println("Erro ao carregar dados(produtos) do banco de dados, ", err)
 	}
 
-	err = globalTemplate.ExecuteTemplate(w, "product", variables)
+	err = root.Templates.ExecuteTemplate(w, "product", variables)
 
 	if err != nil {
 		log.Print("Template executing error: ", err)

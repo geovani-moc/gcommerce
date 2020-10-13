@@ -1,17 +1,18 @@
 package controller
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/geovani-moc/gcommerce/util"
 
 	"github.com/geovani-moc/gcommerce/entity"
 	"github.com/geovani-moc/gcommerce/model"
 )
 
 //Stock redirect to page stock
-func Stock(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
+func Stock(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	if r.Method == http.MethodPost {
 		if r.FormValue("cust_id") == "insert-product" {
@@ -35,5 +36,5 @@ func Stock(w http.ResponseWriter, r *http.Request, globalTemplate *template.Temp
 		}
 	}
 
-	model.Stock(w, r, globalTemplate)
+	model.Stock(w, r, root)
 }

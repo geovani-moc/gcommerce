@@ -1,9 +1,10 @@
 package model
 
 import (
-	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/geovani-moc/gcommerce/util"
 )
 
 //HomeTemplateVariables variables
@@ -13,17 +14,14 @@ type HomeTemplateVariables struct {
 }
 
 //Home initial page model
-func Home(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
+func Home(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variables := HomeTemplateVariables{
 		Title: "Lista de páginas",
-		Pages: []string{
-			"product",
-			"stock",
-		},
+		Pages: root.Pages,
 	}
 
-	err := globalTemplate.ExecuteTemplate(w, "home", variables)
+	err := root.Templates.ExecuteTemplate(w, "home", variables)
 	if err != nil {
 		log.Print("Template executing error: ", err)
 	}

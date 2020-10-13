@@ -1,14 +1,14 @@
 package controller
 
 import (
-	"html/template"
 	"net/http"
 
 	"github.com/geovani-moc/gcommerce/model"
+	"github.com/geovani-moc/gcommerce/util"
 )
 
 //Product redirect
-func Product(w http.ResponseWriter, r *http.Request, globalTemplate *template.Template) {
+func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
-	model.Product(w, r, globalTemplate)
+	model.Product(w, r, root)
 }
