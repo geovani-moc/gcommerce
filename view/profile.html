@@ -6,7 +6,33 @@
     {{template "header" .}}
     {{template "side-bar" .}}
     <main class="main">
-teste
+        <div>
+            <form action="/profile" method="post">
+                <input type="hidden" name="edit" id="Edit" value="true"><br>
+
+                <label for="Name">Nome: </label>
+                <input type="text" name="name"  id="Name" value="{{.Person.Name}}"><br>
+            
+                <label for="CPF">CPF: </label>
+                <input type="text" name="cpf" id="CPF" value="{{.Person.CPF}}"><br>
+
+                <label for="BirthDate">Nascimento: </label>
+                <input type="text" name="birthDate" id="BirthDate" value="{{.Person.BirthDate}}"><br>
+
+                <label for="Sex">Sexo: </label>
+                <input type="text" name="sex" id="Sex" 
+                {{if  (eq .Person.Sex 1)}}
+                value="Homen"
+                {{else if (eq .Person.Sex 2)}}
+                value="mulher"
+                {{else}}
+                value="indefinido"
+                {{end}}                
+                ><br>
+
+                <input type="submit" value="Editar">
+            </form>
+        </div>
 
     </main>
     {{template "footer" .}}
