@@ -7,7 +7,7 @@ type Person struct {
 	ID            int64     `json:"id"`
 	Code          int64     `json:"code"`
 	CPF           string    `json:"cpf"`
-	Name          string    `json:"name"`
+	Name          string    `json:"name"` //first name and last name
 	BirthDate     time.Time `json:"birth_date"`
 	Type          int64     `json:"type"` // admin, client or official
 	Sex           int64     `json:"sex"`
