@@ -1,8 +1,8 @@
 {{define "header"}}
 <div class="topnav">
-    <a class="active" href="/">Home</a>
-    <a href="/product">Products</a>
-    <a href="/stock">estoque</a>
-    <a href="#">About</a>
+    {{$currentPage := .CurrentPage}}
+    {{range $page := .Pages}}
+    <a {{if eq $currentPage $page}} class="active" {{end}} href="/{{$page}}">{{$page}}</a>
+    {{end}}
 </div>
 {{end}}

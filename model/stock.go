@@ -9,14 +9,18 @@ import (
 
 //StockTemplateVariables variables in the page
 type StockTemplateVariables struct {
-	Title string
+	Title       string
+	Pages       []string
+	CurrentPage string
 }
 
 //Stock generate page
 func Stock(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variables := StockTemplateVariables{
-		Title: "Gerenciar estoque",
+		Title:       "Gerenciar estoque",
+		Pages:       root.Pages,
+		CurrentPage: "stock",
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "stock", variables)

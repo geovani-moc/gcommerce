@@ -9,16 +9,18 @@ import (
 
 //HomeTemplateVariables variables
 type HomeTemplateVariables struct {
-	Title string
-	Pages []string
+	Title       string
+	Pages       []string
+	CurrentPage string
 }
 
 //Home initial page model
 func Home(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variables := HomeTemplateVariables{
-		Title: "Lista de páginas",
-		Pages: root.Pages,
+		Title:       "Lista de páginas",
+		Pages:       root.Pages,
+		CurrentPage: "home",
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "home", variables)

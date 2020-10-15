@@ -35,6 +35,9 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
+		_app.router.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
+			controller.Home(w, r, &_app.root)
+		})
 		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
 			controller.Product(w, r, &_app.root)
 		})
@@ -84,6 +87,7 @@ func NewApp() *App {
 			Port:      ":8080",
 			Templates: parseTemplates(),
 			Pages: []string{
+				"home",
 				"product",
 				"stock",
 				"profile",

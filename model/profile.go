@@ -12,18 +12,20 @@ import (
 
 //ProfileVariablesTemplate definition
 type ProfileVariablesTemplate struct {
-	Title  string
-	Pages  []string
-	Person entity.Person
+	Title       string
+	Pages       []string
+	Person      entity.Person
+	CurrentPage string
 }
 
 //Profile generate page
 func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variable := ProfileVariablesTemplate{
-		Title:  "Perfil",
-		Pages:  root.Pages,
-		Person: database.GetFakePerson(),
+		Title:       "Perfil",
+		Pages:       root.Pages,
+		Person:      database.GetFakePerson(),
+		CurrentPage: "profile",
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "profile", variable)

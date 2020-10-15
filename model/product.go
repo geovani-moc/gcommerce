@@ -12,15 +12,19 @@ import (
 
 // ProductTemplateVariables variables for template parser
 type ProductTemplateVariables struct {
-	Title    string
-	Products []entity.Product
+	Title       string
+	Products    []entity.Product
+	Pages       []string
+	CurrentPage string
 }
 
 // Product controller
 func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 	var err error
 	variables := ProductTemplateVariables{
-		Title: "Todos produtos",
+		Title:       "Todos produtos",
+		Pages:       root.Pages,
+		CurrentPage: "product",
 	}
 
 	variables.Products, err = database.GetFakeProducts()

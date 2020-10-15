@@ -1,8 +1,7 @@
 {{define "side-bar"}}
 <div class="sidenav">
-    <a href="/">Início</a>
-    <a href="/product">Produtos</a>
-    <a href="/stock">Estoque</a>
-    <a href="#">Sobre</a>
+    {{range $page := .Pages}}
+    <a href="/{{$page}}">{{$page}}</a>
+    {{end}}
   </div>
 {{end}}
