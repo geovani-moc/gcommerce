@@ -92,10 +92,16 @@ func NewApp() *App {
 				"product",
 				"stock",
 				"profile",
-			}, //iniciar idiomas aqui
+			},
 			CurrentLanguage: 1,
 		},
 	}
+	var err error
+	app.root.Dictionaries, err = i18n.GetAllDictionaries()
+	if nil != err {
+		log.Print("Nehum idioma localizado")
+	}
+
 	log.Print("App criado ...")
 	return app
 }
