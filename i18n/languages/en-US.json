@@ -1,0 +1,8 @@
+{
+    "pages":{
+        "home":"home",
+        "product":"product",
+        "profile":"profile",
+        "stock": "stock"
+    }
+}

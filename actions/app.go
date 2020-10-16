@@ -79,6 +79,7 @@ func cacheControlWrapper(h http.Handler) http.Handler {
 
 // NewApp create the app
 func NewApp() *App {
+	log.Print("Criando App ...")
 	app := &App{
 		router:          mux.NewRouter(),
 		version:         "0.1 alpha",
@@ -91,7 +92,8 @@ func NewApp() *App {
 				"product",
 				"stock",
 				"profile",
-			},
+			}, //iniciar idiomas aqui
+			CurrentLanguage: 1,
 		},
 	}
 	log.Print("App criado ...")

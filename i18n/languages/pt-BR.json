@@ -1,0 +1,8 @@
+{
+    "pages":{
+        "home":"inicio",
+        "product":"produto",
+        "profile":"perfil",
+        "stock": "estoque"
+    }
+}
