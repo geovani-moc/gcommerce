@@ -14,4 +14,5 @@ type Root struct {
 	SiteName        string
 	Dictionaries    []i18n.Dictionary
 	CurrentLanguage int // 1- english, 2- portugues
+	Dictionary      i18n.Dictionary
 }

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/geovani-moc/gcommerce/controller"
+	"github.com/geovani-moc/gcommerce/i18n"
 	"github.com/geovani-moc/gcommerce/middleware"
 	"github.com/geovani-moc/gcommerce/util"
 
@@ -35,7 +36,7 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc(_app.root.Dictionary.Pages.Home, func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
 		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
@@ -98,6 +99,8 @@ func NewApp() *App {
 	}
 	var err error
 	app.root.Dictionaries, err = i18n.GetAllDictionaries()
+	app.root.Dictionary = app.root.Dictionaries[app.root.CurrentLanguage]
+
 	if nil != err {
 		log.Print("Nehum idioma localizado")
 	}

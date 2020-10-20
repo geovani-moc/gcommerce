@@ -33,3 +33,35 @@ func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		log.Print("Erro ao fazer o parse da pagina de perfil, ", err)
 	}
 }
+
+//ProfileEdit for editions
+func ProfileEdit(w http.ResponseWriter, r *http.Request, root *util.Root) {
+	variable := ProfileVariablesTemplate{
+		Title:       "Perfil",
+		Pages:       root.Pages,
+		Person:      database.GetFakePerson(),
+		CurrentPage: "profile",
+	}
+
+	person := entity.Person{
+		Name: r.FormValue("name"),
+		CPF:  r.FormValue("cpf"),
+	}
+	sexValue := r.FormValue("sex")
+	log.Print(sexValue)
+
+	if sexValue == "Homen" {
+		person.Sex = 1
+	} else if sexValue == "Mulher" {
+		person.Sex = 2
+	} else {
+		person.Sex = 0
+	}
+
+	log.Print("Editando: ", person)
+
+	err := root.Templates.ExecuteTemplate(w, "profile", variable)
+	if nil != err {
+		log.Print("Erro ao gerar templateedit profile, ", err)
+	}
+}

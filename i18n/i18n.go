@@ -16,7 +16,7 @@ type Dictionary struct {
 		Product string `json:"product"`
 		Profile string `json:"profile"`
 		Stock   string `json:"stock"`
-	}
+	} `json:"pages"`
 }
 
 //JSONToStruct coverter Json to equal struct
