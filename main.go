@@ -6,12 +6,9 @@ import (
 	"github.com/geovani-moc/gcommerce/actions"
 )
 
-//TEMPLATE temporary local
-//var TEMPLATE *template.Template
-
 func main() {
-	app := actions.BuildApp()
-	err := app.Run() // verificar problema de varios idiomas rodando ao mesmo tempo
+	app := actions.BuildApp() // adicionar sub dominios par usar os idiomas
+	err := app.Run()          // verificar problema de varios idiomas rodando ao mesmo tempo
 
 	if err != nil {
 		log.Fatal(err)
