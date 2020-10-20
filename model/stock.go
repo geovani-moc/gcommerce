@@ -22,7 +22,7 @@ func Stock(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variables := StockTemplateVariables{
 		Title:       "Gerenciar estoque",
-		Pages:       root.Pages,
+		Pages:       root.NamePages,
 		CurrentPage: "stock",
 	}
 
@@ -37,7 +37,7 @@ func StockInsertProduct(w http.ResponseWriter, r *http.Request, root *util.Root)
 	if r.FormValue("cust_id") == "insert-product" {
 		variables := StockTemplateVariables{
 			Title:       "Gerenciar estoque",
-			Pages:       root.Pages,
+			Pages:       root.NamePages,
 			CurrentPage: "stock",
 		}
 

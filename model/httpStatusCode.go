@@ -18,7 +18,7 @@ type Code404TemplateVariables struct {
 func Code404(w http.ResponseWriter, r *http.Request, root *util.Root) {
 	variables := Code404TemplateVariables{
 		Title:       "Página não encontrada",
-		Pages:       root.Pages,
+		Pages:       root.NamePages,
 		CurrentPage: "httpStatusCode",
 	}
 

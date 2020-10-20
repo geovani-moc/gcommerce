@@ -57,8 +57,8 @@ func loadJSON(path string) ([]byte, error) {
 }
 
 //GetAllDictionaries return all dictionaries
-func GetAllDictionaries() ([]Dictionary, error) {
-	var dictionaries []Dictionary
+func GetAllDictionaries() (map[string]Dictionary, error) {
+	dictionaries := make(map[string]Dictionary)
 
 	err := filepath.Walk("./i18n/languages", func(path string, info os.FileInfo, err error) error {
 		if strings.Contains(path, ".json") {
@@ -66,7 +66,9 @@ func GetAllDictionaries() ([]Dictionary, error) {
 			if nil != err {
 				log.Print("Error de listagem de arquivos", err)
 			} else {
-				dictionaries = append(dictionaries, dictionary)
+				name := strings.TrimSuffix(info.Name(), ".json")
+				dictionaries[name] = dictionary
+				log.Print("Idioma localizado: ", name)
 			}
 		}
 		return err

@@ -36,16 +36,16 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
-		_app.router.HandleFunc(_app.root.Dictionary.Pages.Home, func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Home, func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Product, func(w http.ResponseWriter, r *http.Request) {
 			controller.Product(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/stock", func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Stock, func(w http.ResponseWriter, r *http.Request) {
 			controller.Stock(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Profile, func(w http.ResponseWriter, r *http.Request) {
 			controller.Profile(w, r, &_app.root)
 		})
 
@@ -57,8 +57,6 @@ func BuildApp() *App {
 		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 		//static files
-		// _app.router.PathPrefix("/static/").Handler(
-		// 	http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))//static files without cache control
 		_app.router.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
 			cacheControlWrapper(http.FileServer(http.Dir("static"))))) //static files with cache control
 
@@ -86,15 +84,9 @@ func NewApp() *App {
 		version:         "0.1 alpha",
 		databaseVersion: 0.1, //ler e gravar no arquivo env, e comparar com o banco de dados
 		root: util.Root{
-			Port:      ":8080",
-			Templates: parseTemplates(),
-			Pages: []string{
-				"home",
-				"product",
-				"stock",
-				"profile",
-			},
-			CurrentLanguage: 1,
+			Port:            ":8080",
+			Templates:       parseTemplates(),
+			CurrentLanguage: "pt-BR",
 		},
 	}
 	var err error
@@ -103,6 +95,13 @@ func NewApp() *App {
 
 	if nil != err {
 		log.Print("Nehum idioma localizado")
+	}
+
+	app.root.NamePages = []string{
+		app.root.Dictionary.Pages.Home,
+		app.root.Dictionary.Pages.Product,
+		app.root.Dictionary.Pages.Stock,
+		app.root.Dictionary.Pages.Profile,
 	}
 
 	log.Print("App criado ...")
@@ -114,6 +113,11 @@ func (app *App) Run() error {
 	log.Print("App iniciado ...")
 	fmt.Println("Version: Gcommerce ", app.version)
 	fmt.Println("Aplicação disponivel em: http://localhost" + app.root.Port)
+
+	//definir idioma do usuario
+	//atualizar idioma da aplicacao
+	//verificar p problema de varios idiomas rodando ao mesmo tempo
+
 	http.Handle("/", app.router)
 
 	return http.ListenAndServe(app.root.Port, nil)
@@ -136,4 +140,13 @@ func parseTemplates() *template.Template {
 	}
 
 	return templ
+}
+
+func (app *App) updatePagesNames() {
+	app.root.NamePages = []string{
+		app.root.Dictionary.Pages.Home,
+		app.root.Dictionary.Pages.Product,
+		app.root.Dictionary.Pages.Stock,
+		app.root.Dictionary.Pages.Profile,
+	}
 }

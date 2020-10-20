@@ -23,7 +23,7 @@ func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 	var err error
 	variables := ProductTemplateVariables{
 		Title:       "Todos produtos",
-		Pages:       root.Pages,
+		Pages:       root.NamePages,
 		CurrentPage: "product",
 	}
 

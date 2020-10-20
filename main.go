@@ -11,7 +11,7 @@ import (
 
 func main() {
 	app := actions.BuildApp()
-	err := app.Run()
+	err := app.Run() // verificar problema de varios idiomas rodando ao mesmo tempo
 
 	if err != nil {
 		log.Fatal(err)

@@ -10,9 +10,9 @@ import (
 type Root struct {
 	Templates       *template.Template
 	Port            string
-	Pages           []string
+	NamePages       []string
 	SiteName        string
-	Dictionaries    []i18n.Dictionary
-	CurrentLanguage int // 1- english, 2- portugues
+	Dictionaries    map[string]i18n.Dictionary
+	CurrentLanguage string
 	Dictionary      i18n.Dictionary
 }

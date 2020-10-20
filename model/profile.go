@@ -23,7 +23,7 @@ func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 
 	variable := ProfileVariablesTemplate{
 		Title:       "Perfil",
-		Pages:       root.Pages,
+		Pages:       root.NamePages,
 		Person:      database.GetFakePerson(),
 		CurrentPage: "profile",
 	}
@@ -38,7 +38,7 @@ func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 func ProfileEdit(w http.ResponseWriter, r *http.Request, root *util.Root) {
 	variable := ProfileVariablesTemplate{
 		Title:       "Perfil",
-		Pages:       root.Pages,
+		Pages:       root.NamePages,
 		Person:      database.GetFakePerson(),
 		CurrentPage: "profile",
 	}
