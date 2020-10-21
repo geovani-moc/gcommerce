@@ -65,3 +65,20 @@ func ProfileEdit(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		log.Print("Erro ao gerar templateedit profile, ", err)
 	}
 }
+
+//ProfileEditLanguage modify language
+func ProfileEditLanguage(w http.ResponseWriter, r *http.Request, root *util.Root) {
+	variable := ProfileVariablesTemplate{
+		Title:       "Perfil",
+		Pages:       root.NamePages,
+		Person:      database.GetFakePerson(),
+		CurrentPage: "profile",
+	}
+
+	root.CurrentLanguage = r.FormValue("language")
+	// update language from root
+	err := root.Templates.ExecuteTemplate(w, "profile", variable)
+	if nil != err {
+		log.Print("Erro ao gerar templateedit profile, ", err)
+	}
+}
