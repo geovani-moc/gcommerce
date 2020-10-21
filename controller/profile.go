@@ -16,7 +16,7 @@ func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		model.ProfileEdit(w, r, root)
 
 	case "edit_language":
-		model.ProfileLanguage(w, r, root)
+		model.ProfileEditLanguage(w, r, root)
 	}
 
 	model.Profile(w, r, root)
