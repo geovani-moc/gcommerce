@@ -76,7 +76,7 @@ func ProfileEditLanguage(w http.ResponseWriter, r *http.Request, root *util.Root
 	}
 
 	root.CurrentLanguage = r.FormValue("language")
-	// update language from root
+	// colocar a funcao para alterar o idioma
 	err := root.Templates.ExecuteTemplate(w, "profile", variable)
 	if nil != err {
 		log.Print("Erro ao gerar templateedit profile, ", err)

@@ -36,16 +36,16 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Home, func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 			controller.Home(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Product, func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
 			controller.Product(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Stock, func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/stock", func(w http.ResponseWriter, r *http.Request) {
 			controller.Stock(w, r, &_app.root)
 		})
-		_app.router.HandleFunc("/"+_app.root.Dictionary.Pages.Profile, func(w http.ResponseWriter, r *http.Request) {
+		_app.router.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
 			controller.Profile(w, r, &_app.root)
 		})
 
@@ -87,21 +87,19 @@ func NewApp() *App {
 			Port:            ":8080",
 			Templates:       parseTemplates(),
 			CurrentLanguage: "pt-BR",
+			NamePages: []string{
+				"home",
+				"product",
+				"stock",
+				"profile",
+			},
 		},
 	}
 	var err error
 	app.root.Dictionaries, err = i18n.GetAllDictionaries()
-	app.root.Dictionary = app.root.Dictionaries[app.root.CurrentLanguage]
 
 	if nil != err {
 		log.Print("Nehum idioma localizado")
-	}
-
-	app.root.NamePages = []string{
-		app.root.Dictionary.Pages.Home,
-		app.root.Dictionary.Pages.Product,
-		app.root.Dictionary.Pages.Stock,
-		app.root.Dictionary.Pages.Profile,
 	}
 
 	log.Print("App criado ...")
@@ -114,13 +112,7 @@ func (app *App) Run() error {
 	fmt.Println("Version: Gcommerce ", app.version)
 	fmt.Println("Aplicação disponivel em: http://localhost" + app.root.Port)
 
-	//definir idioma do usuario
-	//atualizar idioma da aplicacao
-	//verificar p problema de varios idiomas rodando ao mesmo tempo
-
-	http.Handle("/", app.router)
-
-	return http.ListenAndServe(app.root.Port, nil)
+	return http.ListenAndServe(app.root.Port, app.router)
 }
 
 func parseTemplates() *template.Template {
@@ -140,13 +132,4 @@ func parseTemplates() *template.Template {
 	}
 
 	return templ
-}
-
-func (app *App) updatePagesNames() {
-	app.root.NamePages = []string{
-		app.root.Dictionary.Pages.Home,
-		app.root.Dictionary.Pages.Product,
-		app.root.Dictionary.Pages.Stock,
-		app.root.Dictionary.Pages.Profile,
-	}
 }
