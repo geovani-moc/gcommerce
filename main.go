@@ -6,6 +6,10 @@ import (
 	"github.com/geovani-moc/gcommerce/actions"
 )
 
+/* LEMBRAR-------------------------------------------------
+tambem comecar os testes
+----------------------------------------------------------*/
+
 func main() {
 	app := actions.BuildApp() // adicionar sub dominios par usar os idiomas
 	err := app.Run()          // verificar problema de varios idiomas rodando ao mesmo tempo
