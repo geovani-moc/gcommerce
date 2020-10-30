@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 {{template "head" .}}
-<body>
+<body class="d-flex flex-column min-vh-100">
     {{template "header" .}}
-    <main class="main">
+    <main class="container">
         <div>
             <form action="/stock" method="POST">
                 <input type="hidden" name="cust_id" id="cust_id" value="insert-product">

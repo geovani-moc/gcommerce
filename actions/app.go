@@ -48,6 +48,9 @@ func BuildApp() *App {
 		_app.router.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
 			controller.Profile(w, r, &_app.root)
 		})
+		_app.router.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+			controller.Login(w, r, &_app.root)
+		})
 
 		//API restfull PRODUCT
 		_app.router.HandleFunc("/api/product/", middleware.GetAllProducts).Methods("GET", "OPTIONS")
@@ -92,6 +95,7 @@ func NewApp() *App {
 				"product",
 				"stock",
 				"profile",
+				"login",
 			},
 		},
 	}
