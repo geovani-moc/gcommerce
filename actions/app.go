@@ -84,7 +84,7 @@ func NewApp() *App {
 	log.Print("Criando App ...")
 	app := &App{
 		router:          mux.NewRouter(),
-		version:         "0.1 alpha",
+		version:         "0.3 alpha",
 		databaseVersion: 0.1, //ler e gravar no arquivo env, e comparar com o banco de dados
 		root: util.Root{
 			Port:            ":8080",
@@ -97,6 +97,7 @@ func NewApp() *App {
 				"profile",
 				"login",
 			},
+			URL: "http://localhost:8080",
 		},
 	}
 	var err error

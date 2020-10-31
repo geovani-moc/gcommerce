@@ -7,8 +7,9 @@
     <main class="container" >
     <div>
         <ul>
+            {{$url := .URL}}
             {{range $page := .Pages}}
-                <li>link: <a href=/{{$page}}>{{$page}}</a></li>
+                <li>link: <a href={{$url}}/{{$page}}>{{$page}}</a></li>
             {{end}}
         </ul>
     </div>        

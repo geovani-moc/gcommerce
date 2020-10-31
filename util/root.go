@@ -14,4 +14,5 @@ type Root struct {
 	SiteName        string
 	Dictionaries    map[string]i18n.Dictionary
 	CurrentLanguage string
+	URL             string
 }

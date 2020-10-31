@@ -6,7 +6,7 @@
     {{template "header" .}}
     <main class="container">
         <div>
-            <form action="/profile" method="post">
+            <form action="{{.URL}}/profile" method="post">
                 <input type="hidden" name="option" id="Option" value="edit_profile"><br>
 
                 <label for="Name">Nome: </label>

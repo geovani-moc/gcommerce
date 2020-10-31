@@ -7,9 +7,10 @@
     {{template "header" .}}
     <main class="container">
         <div class="grid-container">
+            {{$url := .URL}}
             {{range .Products}}
             <div class="card">
-                <img src="../static/image/no_image.png" alt="Denim Jeans" style="width:100%">
+                <img  src="{{$url}}/static/image/no_image.png" alt="Denim Jeans" width="250">
                 <h1>{{.Name}}</h1>
                 <p class="price">${{printf "%.2f" .Price}}</p>
                 <p>{{.Description}}</p>

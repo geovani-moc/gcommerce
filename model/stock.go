@@ -15,6 +15,7 @@ type StockTemplateVariables struct {
 	Pages              []string
 	CurrentPage        string
 	ErrorInsertProduct string
+	URL                string
 }
 
 //Stock generate page
@@ -24,6 +25,7 @@ func Stock(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Title:       "Gerenciar estoque",
 		Pages:       root.NamePages,
 		CurrentPage: "stock",
+		URL:         root.URL,
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "stock", variables)

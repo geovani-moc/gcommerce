@@ -12,6 +12,7 @@ type Code404TemplateVariables struct {
 	Title       string
 	Pages       []string
 	CurrentPage string
+	URL         string
 }
 
 //Code404 generate page
@@ -20,6 +21,7 @@ func Code404(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Title:       "Página não encontrada",
 		Pages:       root.NamePages,
 		CurrentPage: "httpStatusCode",
+		URL:         root.URL,
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "not-found", variables)

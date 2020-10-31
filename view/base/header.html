@@ -1,21 +1,22 @@
 {{define "header"}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-xl">
-      <a class="navbar-brand" href="/">G-commerce</a>
+      <a class="navbar-brand" href="{{.URL}}">G-commerce</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
   
       <div class="collapse navbar-collapse" id="navbarsExample07XL">
         <ul class="navbar-nav mr-auto">
+            {{$url := .URL}}
             {{$currentPage := .CurrentPage}}
             {{range $page := .Pages}}
                 {{if eq $currentPage $page}}
                 <li class="nav-item active"></li>
-                <a class="nav-link" href="/{{$page}}">{{$page}} <span class="sr-only">(current)</span> </a>
+                <a class="nav-link" href="{{$url}}/{{$page}}">{{$page}} <span class="sr-only">(current)</span> </a>
                 {{else}}
                 <li class="nav-item"></li>
-                <a class="nav-link" href="/{{$page}}">{{$page}} </a>
+                <a class="nav-link" href="{{$url}}/{{$page}}">{{$page}} </a>
                 {{end}}
 
             {{end}}
@@ -35,11 +36,4 @@
       </div>
     </div>
   </nav>
-
-<!-- <div class="topnav">
-    {{$currentPage := .CurrentPage}}
-    {{range $page := .Pages}}
-    <a {{if eq $currentPage $page}} class="active" {{end}} href="/{{$page}}">{{$page}}</a>
-    {{end}}
-</div> -->
 {{end}}

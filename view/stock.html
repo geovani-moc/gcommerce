@@ -6,7 +6,7 @@
     {{template "header" .}}
     <main class="container">
         <div>
-            <form action="/stock" method="POST">
+            <form action="{{.URL}}/stock" method="POST">
                 <input type="hidden" name="cust_id" id="cust_id" value="insert-product">
 
                 <label for="id_code">código:</label>  

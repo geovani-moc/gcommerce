@@ -12,6 +12,7 @@ type LoginTemplateVariables struct {
 	Title       string
 	Pages       []string
 	CurrentPage string
+	URL         string
 }
 
 //Login generate page login
@@ -21,6 +22,7 @@ func Login(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Title:       "Autenticação",
 		Pages:       root.NamePages,
 		CurrentPage: "login",
+		URL:         root.URL,
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "login", variables)

@@ -16,6 +16,7 @@ type ProfileVariablesTemplate struct {
 	Pages       []string
 	Person      entity.Person
 	CurrentPage string
+	URL         string
 }
 
 //Profile generate page
@@ -26,6 +27,7 @@ func Profile(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Pages:       root.NamePages,
 		Person:      database.GetFakePerson(),
 		CurrentPage: "profile",
+		URL:         root.URL,
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "profile", variable)

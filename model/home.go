@@ -12,6 +12,7 @@ type HomeTemplateVariables struct {
 	Title       string
 	Pages       []string
 	CurrentPage string
+	URL         string
 }
 
 //Home initial page model
@@ -21,6 +22,7 @@ func Home(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Title:       "Lista de páginas",
 		Pages:       root.NamePages,
 		CurrentPage: "home",
+		URL:         root.URL,
 	}
 
 	err := root.Templates.ExecuteTemplate(w, "home", variables)

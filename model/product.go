@@ -16,6 +16,7 @@ type ProductTemplateVariables struct {
 	Products    []entity.Product
 	Pages       []string
 	CurrentPage string
+	URL         string
 }
 
 // Product controller
@@ -25,6 +26,7 @@ func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		Title:       "Todos produtos",
 		Pages:       root.NamePages,
 		CurrentPage: "product",
+		URL:         root.URL,
 	}
 
 	variables.Products, err = database.GetFakeProducts()
