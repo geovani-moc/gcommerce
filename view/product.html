@@ -6,17 +6,26 @@
 <body class="d-flex flex-column min-vh-100">
     {{template "header" .}}
     <main class="container">
-        <div class="grid-container">
-            {{$url := .URL}}
-            {{range .Products}}
-            <div class="card">
-                <img  src="{{$url}}/static/image/no_image.png" alt="Denim Jeans" width="250">
-                <h1>{{.Name}}</h1>
-                <p class="price">${{printf "%.2f" .Price}}</p>
-                <p>{{.Description}}</p>
-                <p><button>Add to Cart</button></p>
+        <div class="py-3">
+            <div class="container">
+                <h2>Produtos</h2>
+                <div class="row">
+                {{$url := .URL}}
+                {{range .Products}}
+                <div class="card col-lg-4 col-md-6 col-sm-12">
+                    <img class="card-img-top" src="{{$url}}/static/image/no_image.png" alt="{{.Name}}">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">${{printf "%.2f" .Price}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <h4 class="card-title">{{.Name}}</h4>
+                        <p class="card-text">{{.Description}}</p>
+                        <a href="#" class="btn btn-primary">Comprar</a>
+                    </div>
+                </div>
+                {{end}}
             </div>
-            {{end}}
+            </div>
         </div>
     </main>
     {{template "footer" .}}
