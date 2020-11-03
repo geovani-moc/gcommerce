@@ -18,9 +18,9 @@ func CreateSchemaProduct(db *sql.DB) {
 		name text unique,
 		description text,
 		price real,
-		quantity_stock ,
-		status integer real,
-		category integer real,
+		quantity_stock decimal,
+		status integer,
+		category integer,
 		id_brand_product integer
 	);`
 
