@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
+
+	"github.com/geovani-moc/gcommerce/migration"
 
 	"github.com/geovani-moc/gcommerce/actions"
 )
@@ -16,19 +17,32 @@ func main() {
 	arguments := os.Args
 
 	if len(arguments) > 1 {
-		execute(arguments[1:])
+		executeCommand(arguments[1:])
 	}
 
-	app := actions.BuildApp() // adicionar sub dominios par usar os idiomas
-	err := app.Run()          // verificar problema de varios idiomas rodando ao mesmo tempo
+	app := actions.BuildApp()
+	err := app.Run()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func execute(commands []string) {
+func executeCommand(commands []string) {
 	for _, command := range commands {
-		fmt.Println(command)
+		switch command {
+		case "-m":
+			log.Println("Iniciando crição de tabelas ...")
+			err := migration.CreateAllTables()
+			if nil != err {
+				log.Println("Erro na criação de tabelas, ", err)
+			} else {
+				log.Println("Iniciando população de tabelas ...")
+				migration.PopulateAllTables(1000)
+			}
+		default:
+			log.Println("O comando \"", command, "\" não foi reconhecido.")
+		}
+
 	}
 }

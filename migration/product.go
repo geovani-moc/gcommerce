@@ -9,6 +9,17 @@ import (
 	"github.com/geovani-moc/gcommerce/entity"
 )
 
+//CreateAllTables if not create
+func CreateAllTables() error {
+
+	return nil
+}
+
+//PopulateAllTables insert fakes itens in tables
+func PopulateAllTables(quantity int64) {
+
+}
+
 //CreateSchemaProduct create the table in database
 func CreateSchemaProduct(db *sql.DB) {
 	schema := `
