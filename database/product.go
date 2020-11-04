@@ -5,11 +5,12 @@ import (
 	"database/sql"
 	"errors"
 	"log"
+	"strconv"
 
 	"github.com/geovani-moc/gcommerce/entity"
 )
 
-//InsertProduct in database
+//InsertProduct insert one product in database
 func InsertProduct(product entity.Product) int64 {
 	db := createConnection()
 	defer db.Close()
@@ -51,6 +52,28 @@ func InsertProduct(product entity.Product) int64 {
 
 	//retornando id invalido
 	return id
+}
+
+//InsertProducts insert various products in database with one SQL
+func InsertProducts(products []entity.Product, columns []string) []int64 {
+	db := createConnection()
+	defer db.Close()
+
+	sqlStatement := "insert into products ("
+
+	sizeColumns := len(columns)
+	for i := 0; i < sizeColumns-1; i++ {
+		sqlStatement = sqlStatement + columns[i] + ", "
+	}
+	sqlStatement = sqlStatement + columns[sizeColumns-1] + ") values ("
+
+	for i := 0; i < len(products); i++ {
+		for j := 0; j < sizeColumns; j++ {
+			value := (i * sizeColumns) + j
+			sqlStatement = sqlStatement + "$" + strconv.FormatInt(int64(value), 10)
+		}
+	} //funcao incomlpeta
+	return nil
 }
 
 //GetAllProducts return prodducts in database

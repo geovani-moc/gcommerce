@@ -44,14 +44,24 @@ func CreateSchemaProduct(db *sql.DB) {
 // PopulateProduct fakes products
 func PopulateProduct(size int) {
 
+	var products []entity.Product
 	var product entity.Product
+
+	columns := []string{
+		"name",
+		"description",
+		"price",
+	}
+
 	for i := 0; i < size; i++ {
 		product.Name = RandStringRunes(4)
 		product.Description = RandStringRunes(4)
 		product.Price = (rand.Float64() * 100) + 1
+
+		append(products, product)
 	}
 
-	database.InsertProduct(product)
+	database.InsertProducts(products, columns)
 }
 
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
