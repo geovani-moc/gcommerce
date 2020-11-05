@@ -68,11 +68,24 @@ func InsertProducts(products []entity.Product, columns []string) []int64 {
 	sqlStatement = sqlStatement + columns[sizeColumns-1] + ") values ("
 
 	for i := 0; i < len(products); i++ {
-		for j := 0; j < sizeColumns; j++ {
-			value := (i * sizeColumns) + j
-			sqlStatement = sqlStatement + "$" + strconv.FormatInt(int64(value), 10)
+		for j := 0; j < sizeColumns-1; j++ {
+			value := (i * sizeColumns) + j + 1
+			sqlStatement = sqlStatement + "$" + strconv.FormatInt(int64(value), 10) + ","
 		}
-	} //funcao incomlpeta
+	}
+
+	sqlStatement = sqlStatement[:len(sqlStatement)-1] + ") returning id"
+
+	statement, err := db.Prepare(sqlStatement)
+	if nil != err {
+		log.Println("Erro de preparação de SQL, ", err)
+	}
+
+	_, err = statement.Exec(products) // adicionar valores ---usar maps---
+	if nil != err {
+		log.Println("Erro de execução de SQL, ", err)
+	}
+
 	return nil
 }
 
@@ -105,46 +118,6 @@ func GetAllProducts() ([]entity.Product, error) {
 		products = append(products, product)
 	}
 	return products, errors.New("vazio")
-}
-
-// GetFakeProducts fakes products
-func GetFakeProducts() ([]entity.Product, error) {
-	products := []entity.Product{
-		{
-			Code:          1,
-			Name:          "Notebook lenovo",
-			Description:   "Notebook super rapido com i5 e placa de video dedicada!!!",
-			Price:         5000.00,
-			QuantityStock: 2,
-			Status:        1,
-		},
-		{
-			Code:          2,
-			Name:          "Notebook lenovo",
-			Description:   "Notebook super rapido com i9 e placa de video dedicada!!!",
-			Price:         3010.20,
-			QuantityStock: 2,
-			Status:        1,
-		},
-		{
-			Code:          3,
-			Name:          "Notebook Asus",
-			Description:   "Notebook  com i3",
-			Price:         2010.20,
-			QuantityStock: 223,
-			Status:        2,
-		},
-		{
-			Code:          4,
-			Name:          "Notebook tectois",
-			Description:   "Notebook amd e placa de video dedicada.",
-			Price:         3100.00,
-			QuantityStock: 434,
-			Status:        1,
-		},
-	}
-
-	return products, nil
 }
 
 //GetProduct return product by id

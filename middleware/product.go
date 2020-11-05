@@ -26,8 +26,7 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	//get all the products in the db
-	//products, err := database.GetAllProducts()
-	products, err := database.GetFakeProducts()
+	products, err := database.GetAllProducts()
 
 	if err != nil {
 		log.Fatal("Unable to get all products. \n", err)

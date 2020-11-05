@@ -54,17 +54,18 @@ func PopulateProduct(size int) {
 	}
 
 	for i := 0; i < size; i++ {
-		product.Name = RandStringRunes(4)
-		product.Description = RandStringRunes(4)
+		product.Name = RandStringRunes(10)
+		product.Description = RandStringRunes(20)
 		product.Price = (rand.Float64() * 100) + 1
+		product.Code = (rand.Int63n(999999))
 
-		append(products, product)
+		products = append(products, product)
 	}
 
 	database.InsertProducts(products, columns)
 }
 
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ     ")
 
 //RandStringRunes string aleatoria
 func RandStringRunes(n int) string {

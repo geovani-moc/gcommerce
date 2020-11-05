@@ -29,7 +29,7 @@ func Product(w http.ResponseWriter, r *http.Request, root *util.Root) {
 		URL:         root.URL,
 	}
 
-	variables.Products, err = database.GetFakeProducts()
+	variables.Products, err = database.GetAllProducts()
 	if nil != err {
 		log.Println("Erro ao carregar dados(produtos) do banco de dados, ", err)
 	}
