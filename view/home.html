@@ -5,13 +5,11 @@
 <body class="d-flex flex-column min-vh-100">
     {{template "header" .}}
     <main class="container" >
-    <div>
-        <ul>
+    <div class="list-group py-5">
             {{$url := .URL}}
             {{range $page := .Pages}}
-                <li>link: <a href={{$url}}/{{$page}}>{{$page}}</a></li>
+                 <a href={{$url}}/{{$page}} class="list-group-item list-group-item-action text-center">{{$page}}</a>
             {{end}}
-        </ul>
     </div>        
     </main>
     {{template "footer" .}}
