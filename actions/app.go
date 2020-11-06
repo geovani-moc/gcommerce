@@ -9,9 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/geovani-moc/gcommerce/controller"
 	"github.com/geovani-moc/gcommerce/i18n"
-	"github.com/geovani-moc/gcommerce/middleware"
 	"github.com/geovani-moc/gcommerce/util"
 
 	"github.com/gorilla/mux"
@@ -21,8 +19,8 @@ import (
 type App struct {
 	router          *mux.Router
 	version         string
-	databaseVersion float64
 	root            util.Root
+	databaseVersion string
 }
 
 var _app *App
@@ -31,42 +29,7 @@ var _app *App
 func BuildApp() *App {
 	if nil == _app {
 		_app = NewApp()
-
-		//pages
-		_app.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			controller.Home(w, r, &_app.root)
-		})
-		_app.router.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
-			controller.Home(w, r, &_app.root)
-		})
-		_app.router.HandleFunc("/product", func(w http.ResponseWriter, r *http.Request) {
-			controller.Product(w, r, &_app.root)
-		})
-		_app.router.HandleFunc("/stock", func(w http.ResponseWriter, r *http.Request) {
-			controller.Stock(w, r, &_app.root)
-		})
-		_app.router.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
-			controller.Profile(w, r, &_app.root)
-		})
-		_app.router.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-			controller.Login(w, r, &_app.root)
-		})
-
-		//API restfull PRODUCT
-		_app.router.HandleFunc("/api/product/", middleware.GetAllProducts).Methods("GET", "OPTIONS")
-		_app.router.HandleFunc("/api/product{id}", middleware.GetProduct).Methods("GET", "OPTIONS")
-		_app.router.HandleFunc("/api/product/{id}", middleware.UpdateProduct).Methods("PUT", "OPTIONS")
-		_app.router.HandleFunc("/api/delete-product/{id}", middleware.UpdateProduct).Methods("DELETE", "OPTIONS")
-		http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-
-		//static files
-		_app.router.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
-			cacheControlWrapper(http.FileServer(http.Dir("static"))))) //static files with cache control
-
-		//not found page
-		_app.router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			controller.Code404(w, r, &_app.root)
-		})
+		routerURL(_app)
 	}
 	return _app
 }
@@ -81,11 +44,12 @@ func cacheControlWrapper(h http.Handler) http.Handler {
 
 // NewApp create the app
 func NewApp() *App {
-	log.Print("Criando App ...")
+	util.LoadEnvVariables()
+
 	app := &App{
 		router:          mux.NewRouter(),
-		version:         "0.3 alpha",
-		databaseVersion: 0.1, //ler e gravar no arquivo env, e comparar com o banco de dados
+		version:         "0.3",
+		databaseVersion: os.Getenv("DATABASE_VERSION"),
 		root: util.Root{
 			Port:            ":8080",
 			Templates:       parseTemplates(),
@@ -106,16 +70,14 @@ func NewApp() *App {
 	if nil != err {
 		log.Print("Nehum idioma localizado")
 	}
-
-	log.Print("App criado ...")
 	return app
 }
 
 //Run starts the server
 func (app *App) Run() error {
-	log.Print("App iniciado ...")
-	fmt.Println("Version: Gcommerce ", app.version)
-	fmt.Println("Aplicação disponivel em: http://localhost" + app.root.Port)
+	fmt.Println("Gcommerce", app.version)
+	fmt.Println("Database", app.databaseVersion)
+	fmt.Println("Link: http://localhost" + app.root.Port)
 
 	return http.ListenAndServe(app.root.Port, app.router)
 }
