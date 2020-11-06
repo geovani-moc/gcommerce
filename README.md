@@ -16,7 +16,7 @@ __Tecnologias utilizadas__
 Observações:
 
 1. O Podman pode ser substituido pelo Docker.
-2. O Docker pode ser substituido pelo Docker-compose.
+2. O Podman-compose pode ser substituido pelo Docker-compose.
 
 ## Tarefas e casos de uso
 - [x] Estruturação inicial(arquitetura de software)
