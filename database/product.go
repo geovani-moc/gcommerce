@@ -12,7 +12,7 @@ import (
 
 //InsertProduct insert one product in database
 func InsertProduct(product entity.Product) int64 {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	sqlStatement := `
@@ -56,7 +56,7 @@ func InsertProduct(product entity.Product) int64 {
 
 //InsertProducts insert various products in database with one SQL
 func InsertProducts(products []entity.Product, columns []string) []int64 {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	sqlStatement := "insert into products ("
@@ -91,7 +91,7 @@ func InsertProducts(products []entity.Product, columns []string) []int64 {
 
 //GetAllProducts return prodducts in database
 func GetAllProducts() ([]entity.Product, error) {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	var products []entity.Product
@@ -122,7 +122,7 @@ func GetAllProducts() ([]entity.Product, error) {
 
 //GetProduct return product by id
 func GetProduct(id int64) (entity.Product, error) {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	var product entity.Product
@@ -150,7 +150,7 @@ func GetProduct(id int64) (entity.Product, error) {
 
 //UpdateProduct refresh the product values by id
 func UpdateProduct(id int64, product entity.Product) int64 {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	sqlStatement := `update product set 
@@ -178,7 +178,7 @@ func UpdateProduct(id int64, product entity.Product) int64 {
 
 //DeleteProduct remove product by id
 func DeleteProduct(id int64) int64 {
-	db := createConnection()
+	db := CreateConnection()
 	defer db.Close()
 
 	sqlStatement := `delete from products where id=$1`

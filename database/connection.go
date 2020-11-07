@@ -21,8 +21,8 @@ const (
 	databaseName = "gcommerce"
 )
 
-//create connection with postgres db
-func createConnection() *sql.DB {
+//CreateConnection with postgres db
+func CreateConnection() *sql.DB {
 
 	host := os.Getenv("HOST")
 	port, err := strconv.ParseInt(os.Getenv("POSTGRES_PORT"), 10, 64)

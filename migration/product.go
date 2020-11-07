@@ -2,7 +2,6 @@ package migration
 
 import (
 	"database/sql"
-	"log"
 	"math/rand"
 
 	"github.com/geovani-moc/gcommerce/database"
@@ -11,7 +10,9 @@ import (
 
 //CreateAllTables if not create
 func CreateAllTables() error {
-
+	db := database.CreateConnection()
+	defer db.Close()
+	CreateSchemaProduct(db)
 	return nil
 }
 
@@ -21,7 +22,7 @@ func PopulateAllTables(quantity int64) {
 }
 
 //CreateSchemaProduct create the table in database
-func CreateSchemaProduct(db *sql.DB) {
+func CreateSchemaProduct(db *sql.DB) error {
 	schema := `
 	create table if not exists product(
 		id serial primary key,
@@ -37,8 +38,10 @@ func CreateSchemaProduct(db *sql.DB) {
 
 	_, err := db.Exec(schema)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+
+	return nil
 }
 
 // PopulateProduct fakes products
@@ -65,7 +68,7 @@ func PopulateProduct(size int) {
 	database.InsertProducts(products, columns)
 }
 
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ     ")
+var letterRunes = []rune("abcd efghijkl mnopqrstuvw xyzABCDEFGHIJKL MNOPQRSTUVWXYZ ")
 
 //RandStringRunes string aleatoria
 func RandStringRunes(n int) string {
