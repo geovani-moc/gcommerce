@@ -12,16 +12,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-//Quando for colocado em produção mudar
-//essa informações para um arquivo .env
-const (
-	host         = "localhost"
-	port         = 5432
-	user         = "postgres"
-	password     = "postgres"
-	databaseName = "gcommerce"
-)
-
 //CreateConnection with postgres db
 func CreateConnection() *sql.DB {
 
@@ -50,8 +40,6 @@ func CreateConnection() *sql.DB {
 		panic(err)
 	}
 
-	fmt.Println("Successfully connected.")
-
 	return db
 }
 
@@ -78,11 +66,29 @@ func CreateInsert(quantity int, table string, columns []string) string {
 	return sqlStatement
 }
 
-func structToMap(in interface{}) *map[string]interface{} {
-	var out map[string]interface{}
+func structToMap(in *[]interface{}) *[]map[string]interface{} {
+	var out []map[string]interface{}
+	var temp map[string]interface{}
 
-	inrec, _ := json.Marshal(in)
-	json.Unmarshal(inrec, &out)
+	for _, row := range *in {
+		inrec, _ := json.Marshal(row)
+		json.Unmarshal(inrec, &temp)
+		out = append(out, temp)
+	}
 
 	return &out
+}
+
+//SQLvalues extract values from entity for setence sql
+func SQLvalues(data *[]map[string]interface{}, columns []string) *[]interface{} {
+	var values []interface{}
+
+	for _, row := range *data {
+		for i := 0; i < len(columns); i++ {
+			cell := row[columns[i]]
+			values = append(values, fmt.Sprintf("%v", cell))
+		}
+	}
+
+	return &values
 }

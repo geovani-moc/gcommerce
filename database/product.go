@@ -54,7 +54,7 @@ func InsertProduct(product entity.Product) int64 {
 }
 
 //InsertProducts insert various products in database with one SQL
-func InsertProducts(products []entity.Product, columns []string) []int64 {
+func InsertProducts(products []entity.Product, columns []string) {
 	db := CreateConnection()
 	defer db.Close()
 
@@ -64,12 +64,18 @@ func InsertProducts(products []entity.Product, columns []string) []int64 {
 		log.Println("Erro de preparação de SQL, ", err)
 	}
 
-	_, err = statement.Exec(products) // adicionar valores ---usar maps---
+	genericProducts := make([]interface{}, len(products))
+	for i, value := range products {
+		genericProducts[i] = value
+	}
+
+	data := structToMap(&genericProducts)
+	values := SQLvalues(data, columns)
+
+	_, err = statement.Exec(*values...)
 	if nil != err {
 		log.Println("Erro de execução de SQL, ", err)
 	}
-
-	return nil
 }
 
 //GetAllProducts return prodducts in database
