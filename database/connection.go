@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -75,4 +76,13 @@ func CreateInsert(quantity int, table string, columns []string) string {
 
 	sqlStatement = sqlStatement[:len(sqlStatement)-1]
 	return sqlStatement
+}
+
+func structToMap(in interface{}) *map[string]interface{} {
+	var out map[string]interface{}
+
+	inrec, _ := json.Marshal(in)
+	json.Unmarshal(inrec, &out)
+
+	return &out
 }
