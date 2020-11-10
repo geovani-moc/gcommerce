@@ -9,10 +9,6 @@ import (
 	"github.com/geovani-moc/gcommerce/actions"
 )
 
-/* LEMBRAR-------------------------------------------------
-tambem comecar os testes
-----------------------------------------------------------*/
-
 func main() {
 	arguments := os.Args
 

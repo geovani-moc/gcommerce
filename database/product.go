@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"log"
-	"strconv"
 
 	"github.com/geovani-moc/gcommerce/entity"
 )
@@ -59,23 +58,7 @@ func InsertProducts(products []entity.Product, columns []string) []int64 {
 	db := CreateConnection()
 	defer db.Close()
 
-	sqlStatement := "insert into products ("
-
-	sizeColumns := len(columns)
-	for i := 0; i < sizeColumns-1; i++ {
-		sqlStatement = sqlStatement + columns[i] + ", "
-	}
-	sqlStatement = sqlStatement + columns[sizeColumns-1] + ") values ("
-
-	for i := 0; i < len(products); i++ {
-		for j := 0; j < sizeColumns-1; j++ {
-			value := (i * sizeColumns) + j + 1
-			sqlStatement = sqlStatement + "$" + strconv.FormatInt(int64(value), 10) + ","
-		}
-	}
-
-	sqlStatement = sqlStatement[:len(sqlStatement)-1] + ") returning id"
-
+	sqlStatement := CreateInsert(len(products), "products", columns)
 	statement, err := db.Prepare(sqlStatement)
 	if nil != err {
 		log.Println("Erro de preparação de SQL, ", err)
