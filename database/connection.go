@@ -62,16 +62,17 @@ func CreateInsert(quantity int, table string, columns []string) string {
 	for i := 0; i < sizeColumns-1; i++ {
 		sqlStatement = sqlStatement + columns[i] + ", "
 	}
-	sqlStatement = sqlStatement + columns[sizeColumns-1] + ") values("
+	sqlStatement = sqlStatement + columns[sizeColumns-1] + ") values"
 
 	for i := 0; i < quantity; i++ {
+		sqlStatement += "("
 		for j := 0; j < sizeColumns; j++ {
 			value := (i * sizeColumns) + j + 1
 			sqlStatement = sqlStatement + "$" + strconv.FormatInt(int64(value), 10) + ","
 		}
+		sqlStatement = sqlStatement[:len(sqlStatement)-1] + "),"
 	}
 
-	sqlStatement = sqlStatement[:len(sqlStatement)-1] + ")"
-
+	sqlStatement = sqlStatement[:len(sqlStatement)-1]
 	return sqlStatement
 }
