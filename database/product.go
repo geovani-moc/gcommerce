@@ -79,34 +79,42 @@ func InsertProducts(products []entity.Product, columns []string) {
 }
 
 //GetAllProducts return prodducts in database
-func GetAllProducts() ([]entity.Product, error) {
+func GetAllProducts() ([]entity.Product, error) { //passar as colunas como parametro
 	db := CreateConnection()
 	defer db.Close()
 
 	var products []entity.Product
 
-	sqlStatement := `SELECT * FROM  product`
+	sqlStatement := `SELECT id, name, description, price FROM  product`
 
 	rows, err := db.Query(sqlStatement)
 	defer rows.Close()
 
 	if err != nil {
-		log.Fatalf("Unable to execute the query. %v", err)
+		log.Print("Unable to execute the query. ", err)
 	}
 
 	for rows.Next() {
 		var product entity.Product
-		err = rows.Scan(
-			&product.ID, &product.Code, &product.Name,
-			&product.Description, &product.Price, &product.QuantityStock,
-			&product.Status, &product.Category)
+		var description, name sql.NullString
+
+		err = rows.Scan(&product.ID, &name,
+			&description, &product.Price)
 
 		if err != nil {
-			log.Fatalf("Unable to scan the row. %v", err)
+			log.Print("Unable to scan the row. ", err)
 		}
+		product.Description = description.String
+		product.Name = name.String
+
 		products = append(products, product)
 	}
-	return products, errors.New("vazio")
+
+	if len(products) == 0 {
+		return nil, errors.New("vazio")
+	}
+
+	return products, nil
 }
 
 //GetProduct return product by id
